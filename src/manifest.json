@@ -1,0 +1,26 @@
+{
+  "manifest_version": 3,
+  "name": "Jira Rader",
+  "description": "Jira Issue Tracker",
+  "version": "1.0.0",
+  "icons": {
+    "16": "icon/icon16.png",
+    "32": "icon/icon32.png",
+    "48": "icon/icon48.png",
+    "128": "icon/icon128.png"
+  },
+  "background": {
+    "service_worker": "jira-rader-sw-worker.js"
+  },
+  "action": {
+    "permissions": ["tabs"],
+    "default_popup": "index.html"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["./runtime.js", "./polyfills.js", "./main.js"],
+      "run_at": "document_end"
+    }
+  ]
+}

@@ -1,0 +1,48 @@
+<div class="app">
+  <div class="app__header app-header">
+    <div class="app-header__former">
+      <div class="app-header__logo">
+        <img src="assets/images/logo.png" alt="logo" />
+      </div>
+      <div class="app-header__title">JiraRader</div>
+    </div>
+    <div class="app-header__latter">
+      <button class="app-header__button fancy-button">
+        <span class="fancy-button__icon-wrapper">
+          <svg
+            width="10"
+            class="fancy-button__icon-svg"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 14 15"
+          >
+            <path
+              fill="currentColor"
+              d="M13.376 11.552l-.264-10.44-10.44-.24.024 2.28 6.96-.048L.2 12.56l1.488 1.488 9.432-9.432-.048 6.912 2.304.024z"
+            ></path>
+          </svg>
+
+          <svg
+            class="fancy-button__icon-svg fancy-button__icon-svg--copy"
+            xmlns="http://www.w3.org/2000/svg"
+            width="10"
+            fill="none"
+            viewBox="0 0 14 15"
+          >
+            <path
+              fill="currentColor"
+              d="M13.376 11.552l-.264-10.44-10.44-.24.024 2.28 6.96-.048L.2 12.56l1.488 1.488 9.432-9.432-.048 6.912 2.304.024z"
+            ></path>
+          </svg>
+        </span>
+        Open App
+      </button>
+      <button class="app-header__button more-button">
+        <img src="assets/images/more.svg" alt="more" />
+      </button>
+    </div>
+  </div>
+  <div class="app__body">
+    <router-outlet></router-outlet>
+  </div>
+</div>

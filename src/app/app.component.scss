@@ -1,0 +1,88 @@
+@use "main" as *;
+
+:host {
+  display: block;
+}
+
+.app {
+  $border: 3px solid $black;
+  width: 500px;
+  max-height: 800px;
+  min-height: 500px;
+  background-color: $white;
+  display: flex;
+  flex-direction: column;
+  border: $border;
+  &__header {
+    flex: none;
+  }
+
+  &__header + &__body {
+    border-top: $border;
+  }
+  &__body {
+    flex: 1;
+  }
+}
+
+.app-header {
+  display: flex;
+  padding: 8px 10px;
+  &__former {
+    display: flex;
+    align-items: center;
+  }
+  &__former + &__latter {
+    margin-left: auto;
+  }
+  &__latter {
+    display: flex;
+  }
+
+  &__logo {
+    height: 25px;
+    img {
+      height: 100%;
+    }
+  }
+
+  &__logo + &__title {
+    margin-left: 10px;
+  }
+
+  &__title {
+    font-family: $logo-font-stack;
+    font-size: 25px;
+    font-weight: bold;
+  }
+
+  &__button {
+    font-size: 12px;
+    border: none;
+    background-color: transparent;
+  }
+
+  &__button + &__button {
+    margin-left: 10px;
+  }
+}
+
+.fancy-button {
+  @include fancy-btn($primary, $secondary);
+}
+
+.more-button {
+  height: 30px;
+  width: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: opacity 0.5s;
+  &:hover {
+    opacity: 0.5;
+  }
+  img {
+    width: 60%;
+  }
+}

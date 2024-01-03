@@ -1,0 +1,58 @@
+@mixin fancy-btn($main-color, $secondary-color) {
+  $this: &;
+  line-height: 1;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  background-color: $main-color;
+  color: #fff;
+  border-radius: 10rem;
+  font-weight: 600;
+  padding: 0.25rem 0.5rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  cursor: pointer;
+  transition: background-color 0.3s;
+
+  &__icon-wrapper {
+    flex-shrink: 0;
+    width: 1rem;
+    height: 1rem;
+    position: relative;
+    color: $main-color;
+    background-color: #fff;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    overflow: hidden;
+  }
+
+  &:hover {
+    background-color: #000;
+
+    & #{$this}__icon-wrapper {
+      color: #000;
+    }
+
+    & #{$this}__icon-svg:first-child {
+      transition: transform 0.3s ease-in-out;
+      transform: scale(0.75) translate(150%, -150%);
+    }
+
+    & #{$this}__icon-svg--copy {
+      transition: transform 0.3s ease-in-out 0.1s;
+      transform: scale(0.75) translate(0);
+    }
+  }
+
+  &__icon-svg {
+    transform: scale(0.75);
+  }
+
+  &__icon-svg--copy {
+    position: absolute;
+    transform: scale(0.75) translate(-150%, 150%);
+  }
+}
