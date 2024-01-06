@@ -1,17 +1,14 @@
-// importScripts("./ngsw-worker.js");
+importScripts("./worker/boot.js");
 
-// setInterval(() => {
-//   // 檢查 Jira API 並判斷是否發送推播通知
-//   fetch("https://your-jira-api-endpoint")
-//     .then((response) => response.json())
-//     .then((data) => {
-//       // 根據 API 返回的數據判斷是否發送推播通知
-//       if (data && data.updatedIssues) {
-//         // 發送推播通知的邏輯
-//         self.registration.showNotification("New Jira Issues", {
-//           body: "New issues have been updated in Jira!",
-//         });
-//       }
-//     })
-//     .catch((error) => console.error("Error checking Jira API:", error));
-// }, 30 * 60 * 1000); // 每隔 30 分鐘檢查一次
+// const jiraBaseUrl = "https://neutec.atlassian.net";
+// const jqlQuery = "project=CPS AND assignee = currentUser()"; // 替換成你的專案代碼
+// const maxResults = 20; // 設定要返回的最大結果數量
+self.addEventListener("message", (event) => {
+  const { type, data } = event.data;
+  console.log("got message from client!!!!!", event);
+
+  if (type === "init") {
+    // 處理收到的訊息和資料
+    sendDataToClient("inited");
+  }
+});

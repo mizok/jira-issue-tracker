@@ -19,9 +19,4 @@ export class PushNotificationService {
 
     return prm;
   }
-
-  private subscribeToPush() {
-    // 此處應該與後端服務通信以註冊推送
-    // 通常會使用 FCM 或其他推送服務
-  }
 }
