@@ -1,6 +1,6 @@
 {
   "manifest_version": 3,
-  "name": "Jira Rader",
+  "name": "JiraRader",
   "description": "Jira Issue Tracker",
   "version": "1.0.0",
   "icons": {
@@ -13,9 +13,11 @@
     "service_worker": "./jira-rader-sw-worker.js"
   },
   "action": {
-    "permissions": ["tabs"],
+    "permissions": ["tabs", "cookies"],
     "default_popup": "index.html"
   },
+  "permissions": ["cookies"],
+  "host_permissions": ["<all_urls>"],
   "content_scripts": [
     {
       "matches": ["<all_urls>"],

@@ -1,9 +1,11 @@
 export enum WorkerMessageResponseType {
-  INITED = 'inited',
+  INITED = 'INITED',
+  RESPONSE_API_DATA = 'RESPONSE_API_DATA',
 }
 
 export enum WorkerPostMessageType {
-  INIT = 'init',
+  INIT = 'INIT',
+  GET_API_DATA = 'GET_API_DATA',
 }
 
 export const SERVICE_WORKER = 'jira-rader-sw-worker.js';

@@ -31,8 +31,7 @@
               "src/icon",
               "src/assets",
               "src/manifest.json",
-              "src/jira-rader-sw-worker.js",
-              "src/worker"
+              "src/jira-rader-sw-worker.js"
             ],
             "styles": ["src/styles.scss"],
             "scripts": [],

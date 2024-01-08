@@ -6,6 +6,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { SERVICE_WORKER } from './service/worker/worker.model';
+import { StoreModule } from '@ngrx/store';
+import { appReducer } from './store/app.reducer';
 
 @NgModule({
   declarations: [AppComponent],
@@ -19,6 +21,7 @@ import { SERVICE_WORKER } from './service/worker/worker.model';
       // or after 30 seconds (whichever comes first).
       registrationStrategy: 'registerWhenStable:30000',
     }),
+    StoreModule.forRoot({ app: appReducer }, {}),
   ],
   providers: [],
   bootstrap: [AppComponent],

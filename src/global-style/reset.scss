@@ -40,7 +40,6 @@ body {
 
 html,
 body {
-  height: 100%;
   box-sizing: border-box;
   -ms-overflow-style: scrollbar;
 }
@@ -149,7 +148,7 @@ a {
 
 b,
 strong {
-  font-weight: bolder;
+  font-weight: bold;
 }
 
 blockquote,

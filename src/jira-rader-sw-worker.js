@@ -1,14 +1,35 @@
-importScripts("./worker/boot.js");
+function sendDataToClient(type, data = {}) {
+  self.clients.matchAll().then((clients) => {
+    clients.forEach((client) => {
+      client.postMessage({ type: type, data: data });
+    });
+  });
+}
 
-// const jiraBaseUrl = "https://neutec.atlassian.net";
-// const jqlQuery = "project=CPS AND assignee = currentUser()"; // 替換成你的專案代碼
-// const maxResults = 20; // 設定要返回的最大結果數量
+function requestApiData(apiUrl) {
+  return fetch(apiUrl).then((response) => response.json());
+}
+
 self.addEventListener("message", (event) => {
   const { type, data } = event.data;
-  console.log("got message from client!!!!!", event);
+  // console.log("got message from client!!!!!", event);
 
-  if (type === "init") {
-    // 處理收到的訊息和資料
-    sendDataToClient("inited");
+  switch (type) {
+    case "INIT":
+      sendDataToClient("INITED");
+      break;
+    case "GET_API_DATA":
+      requestApiData(data.url)
+        .then((responseData) =>
+          sendDataToClient("RESPONSE_API_DATA", responseData)
+        )
+        .catch((error) => {
+          console.error(error);
+          sendDataToClient(
+            "RESPONSE_API_DATA",
+            new Error("service worker get api data failed")
+          );
+        });
+      break;
   }
 });

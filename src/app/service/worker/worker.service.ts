@@ -13,9 +13,10 @@ import { EventTrackerService } from '../event-tracker/event-tracker.service';
 export class WorkerService {
   private eventTrackerService = inject(EventTrackerService);
   private worker: ServiceWorker | null = null;
+  private initSubject = new Subject<boolean>();
+  private getApiSubject = new Subject<boolean>();
 
   init(): Observable<boolean> {
-    const initSubject = new Subject<boolean>();
     const worker = this.getWorkerRegistration();
     if (worker) {
       worker
@@ -25,11 +26,7 @@ export class WorkerService {
             this.eventTrackerService.resetEventListenerByType<
               MessageEvent<any>
             >(navigator.serviceWorker, 'message', (event) => {
-              console.log('got message from service worker!!!!!', event);
-              if (event.data.type === WorkerMessageResponseType.INITED) {
-                initSubject.next(true);
-                initSubject.complete();
-              }
+              // console.log('got message from service worker!!!!!', event);
               this.workerEventHandler(event);
             });
             this.postMessage(WorkerPostMessageType.INIT);
@@ -37,18 +34,23 @@ export class WorkerService {
         })
         .catch((error) => {
           console.error('Error during service worker registration:', error);
-          initSubject.error(error);
+          this.initSubject.error(error);
         });
     } else {
       const errormsg = 'Service worker not supported.';
       console.warn(errormsg);
-      initSubject.error(errormsg);
+      this.initSubject.error(errormsg);
     }
 
-    return initSubject.asObservable();
+    return this.initSubject.asObservable();
   }
 
-  postMessage(type: WorkerPostMessageType, data?: any) {
+  getApiData(apiUrl: string) {
+    this.postMessage(WorkerPostMessageType.GET_API_DATA, { url: apiUrl });
+    return this.getApiSubject.asObservable();
+  }
+
+  private postMessage(type: WorkerPostMessageType, data?: any) {
     if (this.worker) {
       this.worker.postMessage({ type: type, data: data });
     }
@@ -66,6 +68,13 @@ export class WorkerService {
     const { type, data } = event.data;
 
     switch (type) {
+      case WorkerMessageResponseType.INITED:
+        this.initSubject.next(true);
+        this.initSubject.complete();
+        break;
+      case WorkerMessageResponseType.RESPONSE_API_DATA:
+        this.getApiSubject.next(data);
+        break;
     }
   }
 }

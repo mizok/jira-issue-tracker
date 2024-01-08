@@ -5,10 +5,10 @@
 }
 
 .app {
-  $border: 1px solid $black;
+  $border: 1px solid #ddd;
   width: 500px;
   max-height: 800px;
-  min-height: 500px;
+  min-height: 300px;
   background-color: $white;
   display: flex;
   flex-direction: column;
