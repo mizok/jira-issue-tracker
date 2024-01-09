@@ -9,17 +9,35 @@
         will use the login credentials stored in your
         <strong>cookies</strong> for seamless integration.
       </p>
-      <div class="start-page__input">
-        <label for="jiraDomain">Enter Your Jira Domain:</label>
-        <input
-          type="text"
-          id="jiraDomain"
-          placeholder="e.g., yourcompany.atlassian.net"
-        />
-      </div>
-      <button class="start-page__connect-btn" (click)="checkCookie()">
-        Connect to Jira
-      </button>
+
+      <form
+        class="start-page__form start-page-form"
+        [formGroup]="form"
+        (ngSubmit)="submitForm()"
+      >
+        <div class="start-page-form__input">
+          <label for="jiraDomain">Enter Your Jira Domain:</label>
+          <input
+            type="text"
+            id="jiraDomain"
+            placeholder="https://yourcompany.atlassian.net"
+            formControlName="jiraDomain"
+          />
+        </div>
+        <app-error-msg
+          class="start-page-form__error-msg"
+          [show]="!!getFirstFormError()"
+          [text]="getFirstFormError()"
+        ></app-error-msg>
+        <button
+          class="start-page-form__connect-btn"
+          [class.start-page-form__connect-btn--disabled]="
+            form.status !== 'VALID'
+          "
+        >
+          Connect to Jira
+        </button>
+      </form>
     </div>
     <div class="start-page__footer">
       <div class="start-page__copyright">
