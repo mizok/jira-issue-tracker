@@ -1,5 +1,7 @@
-import { NgModule } from '@angular/core';
+import { NgModule, inject } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { DataStoreService } from './service/data-store/data-store.service';
+import { map, take } from 'rxjs';
 
 const routes: Routes = [
   {
@@ -11,7 +13,7 @@ const routes: Routes = [
   },
   {
     path: '',
-    canMatch: [() => false],
+    canMatch: [],
     loadChildren: () =>
       import('./pages/main-page/main-page.module').then(
         (res) => res.MainPageModule

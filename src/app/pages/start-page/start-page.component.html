@@ -4,7 +4,7 @@
       <h1 class="start-page__title">Welcome to JiraRader</h1>
       <p class="start-page__description">
         <strong>JiraRader</strong> is a Chrome extension designed to help users
-        track Jira issue updates. Please enter your Jira domain below, and make
+        track Jira issue updates. Please enter your Jira url below, and make
         sure you are logged in to your Jira account to connect. The extension
         will use the login credentials stored in your
         <strong>cookies</strong> for seamless integration.
@@ -13,15 +13,15 @@
       <form
         class="start-page__form start-page-form"
         [formGroup]="form"
-        (ngSubmit)="submitForm()"
+        (ngSubmit)="submitFormHandler()"
       >
         <div class="start-page-form__input">
-          <label for="jiraDomain">Enter Your Jira Domain:</label>
+          <label for="jiraUrl">Enter Your Jira URL:</label>
           <input
             type="text"
-            id="jiraDomain"
+            id="jiraUrl"
             placeholder="https://yourcompany.atlassian.net"
-            formControlName="jiraDomain"
+            formControlName="jiraUrl"
           />
         </div>
         <app-error-msg
@@ -32,7 +32,7 @@
         <button
           class="start-page-form__connect-btn"
           [class.start-page-form__connect-btn--disabled]="
-            form.status !== 'VALID'
+            (form.statusChanges | async) !== 'VALID'
           "
         >
           Connect to Jira

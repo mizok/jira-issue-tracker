@@ -3,5 +3,5 @@ export interface AppState {
 }
 
 export interface UserConfig {
-  domain: string;
+  jiraUrl: string;
 }

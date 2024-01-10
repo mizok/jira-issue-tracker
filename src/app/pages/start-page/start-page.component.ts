@@ -1,32 +1,31 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
-import {
-  AbstractControl,
-  FormBuilder,
-  ValidationErrors,
-  FormControlStatus,
-  Validators,
-} from '@angular/forms';
+import { AbstractControl, FormBuilder, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { filter, take, tap } from 'rxjs';
+import { DataStoreService } from 'src/app/service/data-store/data-store.service';
 
 enum StartPageErrorType {
-  ATLASSIAN_DOMAIN = 'atlassianDomain',
+  JIRA_URL = 'jiraUrl',
 }
 
-function checkCookiesByDomain(domain: string) {
-  if (domain) {
-    const cookieDetails = {
-      url: domain,
-    };
+function checkCookiesByUrl(url: string): Promise<boolean> {
+  return new Promise((resolve) => {
+    if (url) {
+      const cookiesDetails = {
+        domain: url,
+      };
 
-    chrome.cookies.getAll(cookieDetails, (cookie: any) => {
-      if (cookie) {
-        return true;
-      } else {
-        return false;
-      }
-    });
-  }
-
-  return false;
+      chrome.cookies.getAll(cookiesDetails, (cookies) => {
+        if (cookies.length > 0) {
+          resolve(true);
+        } else {
+          resolve(false);
+        }
+      });
+    } else {
+      resolve(false);
+    }
+  });
 }
 
 @Component({
@@ -37,18 +36,17 @@ function checkCookiesByDomain(domain: string) {
 })
 export class StartPageComponent {
   private formBuilder = inject(FormBuilder);
+  private dataStoreService = inject(DataStoreService);
+  private router = inject(Router);
   readonly form = this.formBuilder.group({
-    jiraDomain: ['', [Validators.required, this.atlassianDomainValidator]],
+    jiraUrl: [
+      '',
+      {
+        validators: [Validators.required],
+        asyncValidators: [this.jiraUrlValidator],
+      },
+    ],
   });
-  public get formControlStatus(): FormControlStatus {
-    return this.form.status;
-  }
-
-  submitForm() {
-    if (this.formControlStatus === 'VALID') {
-    } else {
-    }
-  }
 
   getFirstFormError(): string {
     const controlNames = Object.keys(this.form.controls);
@@ -64,24 +62,40 @@ export class StartPageComponent {
     return '';
   }
 
-  private atlassianDomainValidator(
+  private async jiraUrlValidator(
     control: AbstractControl
-  ): Record<StartPageErrorType, any> | null {
+  ): Promise<Record<StartPageErrorType, any> | null> {
     const value = control.value as string;
-    const atlassianDomainRegex = /https:\/\/([a-zA-Z0-9-]+\.)*atlassian\.net/;
-
-    if (value && !atlassianDomainRegex.test(value)) {
+    const jiraUrlRegex = /^(https:\/\/)(([a-zA-Z0-9-]+\.)*atlassian\.net)(.*)/;
+    const domain = value.replace(jiraUrlRegex, `$2`);
+    if (value && !jiraUrlRegex.test(value)) {
       return {
-        [StartPageErrorType.ATLASSIAN_DOMAIN]:
-          'Please enter a valid Atlassian domain',
+        [StartPageErrorType.JIRA_URL]: 'Please enter a valid Jira URL',
       };
-    } else if (value && !checkCookiesByDomain(value)) {
+    } else if (value && !(await checkCookiesByUrl(domain))) {
       return {
-        [StartPageErrorType.ATLASSIAN_DOMAIN]:
+        [StartPageErrorType.JIRA_URL]:
           'Cookies not found, please verify the authentication status of Jira.',
       };
     } else {
       return null;
     }
+  }
+
+  submitFormHandler() {
+    if (this.form.status === 'VALID') {
+      this.storeJiraUrl();
+      this.router.navigateByUrl('');
+    } else {
+      const err = new Error('Form is not valid.');
+      console.error(err);
+    }
+  }
+
+  private storeJiraUrl() {
+    const jiraUrl = this.form.get('jiraUrl')?.value as string;
+    this.dataStoreService.setUserConfig({
+      jiraUrl: jiraUrl,
+    });
   }
 }

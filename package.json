@@ -3,6 +3,7 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
+    "install-dev": "npm run build && /Applications/Google\\ Chrome.app/Contents/MacOS/Google\\ Chrome --load-extension='./dist/jira-rader'",
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
