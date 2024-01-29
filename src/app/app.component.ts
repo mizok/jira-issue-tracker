@@ -1,5 +1,14 @@
-import { Component, OnInit, inject } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  OnInit,
+  ViewChild,
+  inject,
+} from '@angular/core';
 import { WorkerService } from './service/worker/worker.service';
+import { NavigationEnd, NavigationStart, Router } from '@angular/router';
+import { filter, tap } from 'rxjs';
+import { ApiService } from './service/api/api.service';
 
 @Component({
   selector: 'app-root',
@@ -7,20 +16,28 @@ import { WorkerService } from './service/worker/worker.service';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit {
-  title = 'jira-rader';
+  @ViewChild('app') appEleRef!: ElementRef<HTMLElement>;
   private workerService = inject(WorkerService);
+  private router = inject(Router);
 
   ngOnInit(): void {
-    this.workerService.init().subscribe(() => {
-      const jiraBaseUrl = 'https://neutec.atlassian.net';
-      const jqlQuery = 'project=CPS AND assignee = currentUser()'; // 替換成你的專案代碼
-      const maxResults = 20; // 設定要返回的最大結果數量
-      const apiUrl = `${jiraBaseUrl}/rest/api/3/search?jql=${encodeURIComponent(
-        jqlQuery
-      )}&maxResults=${maxResults}`;
-      this.workerService.getApiData(apiUrl).subscribe((data) => {
-        console.log(data);
-      });
-    });
+    this.setRouterChangeTransition();
+    this.workerService.init().subscribe();
+  }
+
+  setRouterChangeTransition() {
+    this.router.events
+      .pipe(
+        tap((ev) => {
+          const appEle = this.appEleRef.nativeElement;
+          if (ev instanceof NavigationStart) {
+            appEle.style.height = appEle.getBoundingClientRect().height + 'px';
+          } else if (ev instanceof NavigationEnd) {
+            appEle.style.height = '';
+            appEle.style.height = appEle.getBoundingClientRect().height + 'px';
+          }
+        })
+      )
+      .subscribe();
   }
 }

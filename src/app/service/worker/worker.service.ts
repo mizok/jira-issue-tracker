@@ -1,4 +1,4 @@
-import { Injectable, inject } from '@angular/core';
+import { ErrorHandler, Injectable, inject } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 import {
   SERVICE_WORKER,
@@ -6,6 +6,7 @@ import {
   WorkerPostMessageType,
 } from './worker.model';
 import { EventTrackerService } from '../event-tracker/event-tracker.service';
+import { ErrorHandlerService } from '../error-handler/error-handler.service';
 
 @Injectable({
   providedIn: 'root',
@@ -14,7 +15,8 @@ export class WorkerService {
   private eventTrackerService = inject(EventTrackerService);
   private worker: ServiceWorker | null = null;
   private initSubject = new Subject<boolean>();
-  private getApiSubject = new Subject<boolean>();
+  private getApiSubject = new Subject<any>();
+  private errorHandlerService = inject(ErrorHandlerService);
 
   init(): Observable<boolean> {
     const worker = this.getWorkerRegistration();

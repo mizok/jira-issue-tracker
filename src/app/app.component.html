@@ -1,4 +1,4 @@
-<div class="app">
+<div class="app" #app>
   <div class="app__header app-header">
     <div class="app-header__former">
       <div class="app-header__logo">
@@ -7,7 +7,10 @@
       <div class="app-header__title">JiraRader</div>
     </div>
     <div class="app-header__latter">
-      <button class="app-header__button fancy-button">
+      <button class="app-header__button avatar">
+        <img src="" alt="" />
+      </button>
+      <button class="app-header__button fancy-button" *ngIf="false">
         <span class="fancy-button__icon-wrapper">
           <svg
             width="10"

@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { AbstractControl, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { filter, take, tap } from 'rxjs';
+import { AuthService } from 'src/app/service/auth/auth.service';
 import { DataStoreService } from 'src/app/service/data-store/data-store.service';
 
 enum StartPageErrorType {
@@ -37,6 +38,7 @@ function checkCookiesByUrl(url: string): Promise<boolean> {
 export class StartPageComponent {
   private formBuilder = inject(FormBuilder);
   private dataStoreService = inject(DataStoreService);
+  private authService = inject(AuthService);
   private router = inject(Router);
   readonly form = this.formBuilder.group({
     jiraUrl: [
@@ -67,12 +69,12 @@ export class StartPageComponent {
   ): Promise<Record<StartPageErrorType, any> | null> {
     const value = control.value as string;
     const jiraUrlRegex = /^(https:\/\/)(([a-zA-Z0-9-]+\.)*atlassian\.net)(.*)/;
-    const domain = value.replace(jiraUrlRegex, `$2`);
+    const url = value.replace(jiraUrlRegex, `$2`);
     if (value && !jiraUrlRegex.test(value)) {
       return {
         [StartPageErrorType.JIRA_URL]: 'Please enter a valid Jira URL',
       };
-    } else if (value && !(await checkCookiesByUrl(domain))) {
+    } else if (value && !(await checkCookiesByUrl(url))) {
       return {
         [StartPageErrorType.JIRA_URL]:
           'Cookies not found, please verify the authentication status of Jira.',
@@ -85,9 +87,10 @@ export class StartPageComponent {
   submitFormHandler() {
     if (this.form.status === 'VALID') {
       this.storeJiraUrl();
+      this.authService.login();
       this.router.navigateByUrl('');
     } else {
-      const err = new Error('Form is not valid.');
+      const err = new Error('Form is invalid.');
       console.error(err);
     }
   }

@@ -1,14 +1,24 @@
-import { createReducer, on } from '@ngrx/store';
-import { setUserConfig } from './app.actions';
-import { AppState } from './app.state';
+import {
+  Action,
+  ActionReducer,
+  MetaReducer,
+  createReducer,
+  on,
+} from '@ngrx/store';
+import { setUserConfig, setUserState } from './app.actions';
+import { AppState, initialState } from './app.state';
+import { localStorageSync } from 'ngrx-store-localstorage';
 
-export const initialState: AppState = {
-  userConfig: {
-    jiraUrl: 'default',
-  },
+export const reducers: Record<string, ActionReducer<AppState, Action>> = {
+  appState: createReducer(
+    initialState,
+    on(setUserConfig, (state, userConfig) => ({ ...state, userConfig })),
+    on(setUserState, (state, userState) => ({ ...state, userState }))
+  ),
 };
 
-export const appReducer = createReducer(
-  initialState,
-  on(setUserConfig, (state, { userConfig }) => ({ ...state, userConfig }))
-);
+export function localStorageSyncReducer(reducer: any): any {
+  return localStorageSync({ keys: ['appState'], rehydrate: true })(reducer);
+}
+
+export const metaReducers: MetaReducer<any>[] = [localStorageSyncReducer];

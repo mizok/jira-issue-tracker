@@ -7,7 +7,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { SERVICE_WORKER } from './service/worker/worker.model';
 import { StoreModule } from '@ngrx/store';
-import { appReducer } from './store/app.reducer';
+import { reducers, metaReducers } from './store/app.reducer';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [AppComponent],
@@ -21,7 +22,8 @@ import { appReducer } from './store/app.reducer';
       // or after 30 seconds (whichever comes first).
       registrationStrategy: 'registerWhenStable:30000',
     }),
-    StoreModule.forRoot({ app: appReducer }, {}),
+    StoreModule.forRoot(reducers, { metaReducers }),
+    BrowserAnimationsModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
