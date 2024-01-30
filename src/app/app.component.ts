@@ -1,13 +1,17 @@
 import {
+  AfterViewInit,
   Component,
   ElementRef,
-  OnInit,
+  TemplateRef,
+  Type,
   ViewChild,
+  ViewContainerRef,
   inject,
 } from '@angular/core';
 import { WorkerService } from './service/worker/worker.service';
 import { style, animate, trigger, transition } from '@angular/animations';
 import { RouterOutlet } from '@angular/router';
+import { ViewContainerRefDirective } from './directive/view-container-ref/view-container-ref.directive';
 
 @Component({
   selector: 'app-root',
@@ -22,11 +26,10 @@ import { RouterOutlet } from '@angular/router';
     ]),
   ],
 })
-export class AppComponent implements OnInit {
-  @ViewChild('app') appEleRef!: ElementRef<HTMLElement>;
+export class AppComponent implements AfterViewInit {
   private workerService = inject(WorkerService);
 
-  ngOnInit(): void {
+  ngAfterViewInit(): void {
     this.workerService.init().subscribe();
   }
 

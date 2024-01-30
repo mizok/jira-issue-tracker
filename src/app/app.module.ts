@@ -11,9 +11,10 @@ import { reducers, metaReducers } from './store/app.reducer';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ErrorInfoComponent } from './components/dialog/error-info/error-info.component';
 import { DialogModule } from '@angular/cdk/dialog';
+import { ViewContainerRefDirective } from './directive/view-container-ref/view-container-ref.directive';
 
 @NgModule({
-  declarations: [AppComponent, ErrorInfoComponent],
+  declarations: [AppComponent, ErrorInfoComponent, ViewContainerRefDirective],
   imports: [
     BrowserModule,
     AppRoutingModule,

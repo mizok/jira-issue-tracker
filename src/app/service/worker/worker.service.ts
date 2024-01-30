@@ -49,14 +49,14 @@ export class WorkerService {
     }
 
     return this.initSubject.pipe(
-      catchError((error) => this.errorHandlerService.info(error))
+      catchError((error) => this.errorHandlerService.info(error, true))
     );
   }
 
   getApiData(apiUrl: string) {
     this.postMessage(WorkerPostMessageType.GET_API_DATA, { url: apiUrl });
     return this.getApiSubject.pipe(
-      catchError((error) => this.errorHandlerService.info(error))
+      catchError((error) => this.errorHandlerService.info(error, true))
     );
   }
 

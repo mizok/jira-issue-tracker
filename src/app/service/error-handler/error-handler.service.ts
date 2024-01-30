@@ -1,7 +1,10 @@
 import { Injectable, inject } from '@angular/core';
 import { Dialog } from '@angular/cdk/dialog';
 import { throwError } from 'rxjs';
-import { ErrorInfoComponent } from 'src/app/components/dialog/error-info/error-info.component';
+import {
+  ErrorInfoComponent,
+  ErrorInfoDataType,
+} from 'src/app/components/dialog/error-info/error-info.component';
 import { Overlay } from '@angular/cdk/overlay';
 
 @Injectable({
@@ -11,23 +14,23 @@ export class ErrorHandlerService {
   private dialog = inject(Dialog);
   private overlay = inject(Overlay);
 
-  info(errorMessage: string) {
+  info(errorMessage: string, disableClose = false) {
     const positionStrategy = this.overlay
       .position()
       .global()
-      .centerHorizontally()
-      .top('10px');
-    this.dialog.open<{ errorMessage: string }>(ErrorInfoComponent, {
+      .top('10px')
+      .centerHorizontally();
+
+    const dialogRef = this.dialog.open<ErrorInfoDataType>(ErrorInfoComponent, {
       panelClass: 'error-info-panel',
-      backdropClass: 'error-info-backdrop',
+      hasBackdrop: false,
       disableClose: true,
       positionStrategy: positionStrategy,
       data: {
         errorMessage: errorMessage,
+        disableClose: disableClose,
       },
     });
-
-    console.warn(errorMessage);
 
     return throwError(() => new Error(errorMessage));
   }

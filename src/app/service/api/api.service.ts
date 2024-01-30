@@ -19,11 +19,17 @@ export class ApiService {
       take(1),
       switchMap((config) => {
         if (!config) {
-          return this.erorHandlerService.info('No existing config.');
+          return this.erorHandlerService.info(
+            'No existing config. Please check setting page.',
+            true
+          );
         }
         const baseUrl = config.jiraUrl;
         if (!baseUrl) {
-          return this.erorHandlerService.info('No valid jiraUrl in config.');
+          return this.erorHandlerService.info(
+            'No valid jira URL in config. Please check the jira URL setting in setting page.',
+            true
+          );
         }
         const apiUrl = `${baseUrl}${url}`;
         return this.workerService.getApiData(apiUrl);

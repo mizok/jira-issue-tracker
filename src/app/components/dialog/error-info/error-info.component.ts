@@ -14,6 +14,11 @@ enum ErrorInfoAnimationState {
   FINAL = 'final',
 }
 
+export interface ErrorInfoDataType {
+  errorMessage: string;
+  disableClose?: boolean;
+}
+
 @Component({
   selector: 'app-error-info',
   templateUrl: './error-info.component.html',
@@ -39,12 +44,16 @@ enum ErrorInfoAnimationState {
   ],
 })
 export class ErrorInfoComponent implements OnInit {
-  private readonly dialogData = inject(DIALOG_DATA);
-  readonly dialogRef = inject(DialogRef<{ errorMessage: string }>);
+  private readonly dialogData: ErrorInfoDataType = inject(DIALOG_DATA);
+  readonly dialogRef = inject(DialogRef<ErrorInfoDataType>);
   animationState: ErrorInfoAnimationState = ErrorInfoAnimationState.INITIAL;
 
   public get errorMessage() {
     return this.dialogData.errorMessage;
+  }
+
+  public get disableClose() {
+    return this.dialogData.disableClose;
   }
 
   ngOnInit(): void {
