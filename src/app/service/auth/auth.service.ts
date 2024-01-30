@@ -1,5 +1,5 @@
 import { Injectable, inject } from '@angular/core';
-import { Subject, take, tap } from 'rxjs';
+import { map, take, tap } from 'rxjs';
 import { DataStoreService } from '../data-store/data-store.service';
 import { ApiService } from '../api/api.service';
 
@@ -7,10 +7,11 @@ import { ApiService } from '../api/api.service';
   providedIn: 'root',
 })
 export class AuthService {
-  private _isLogin = new Subject();
   private dataStorageService = inject(DataStoreService);
   private apiService = inject(ApiService);
-  readonly isLogin$ = this._isLogin.asObservable();
+  readonly isLogin$ = this.dataStorageService
+    .getUserState()
+    .pipe(map((state) => !!state));
 
   login() {
     return this.apiService.getCurrentUser().pipe(
@@ -19,8 +20,8 @@ export class AuthService {
         if (userData) {
           this.dataStorageService.setUserState({
             name: userData.displayName,
+            avatarImgUrl: userData.displayName,
           });
-          this._isLogin.next(true);
         }
       })
     );

@@ -1,9 +1,9 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { AbstractControl, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { filter, take, tap } from 'rxjs';
 import { AuthService } from 'src/app/service/auth/auth.service';
 import { DataStoreService } from 'src/app/service/data-store/data-store.service';
+import { ErrorHandlerService } from 'src/app/service/error-handler/error-handler.service';
 
 enum StartPageErrorType {
   JIRA_URL = 'jiraUrl',
@@ -40,6 +40,7 @@ export class StartPageComponent {
   private dataStoreService = inject(DataStoreService);
   private authService = inject(AuthService);
   private router = inject(Router);
+  private errorHandlerService = inject(ErrorHandlerService);
   readonly form = this.formBuilder.group({
     jiraUrl: [
       '',
@@ -87,11 +88,11 @@ export class StartPageComponent {
   submitFormHandler() {
     if (this.form.status === 'VALID') {
       this.storeJiraUrl();
-      this.authService.login();
-      this.router.navigateByUrl('');
+      this.authService.login().subscribe(() => {
+        this.router.navigateByUrl('main');
+      });
     } else {
-      const err = new Error('Form is invalid.');
-      console.error(err);
+      this.errorHandlerService.info('Form is invalid.');
     }
   }
 

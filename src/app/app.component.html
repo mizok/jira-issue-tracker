@@ -45,7 +45,7 @@
       </button>
     </div>
   </div>
-  <div class="app__body">
-    <router-outlet></router-outlet>
+  <div class="app__body" [@routeAnimations]="getRouterOutletState(outlet)">
+    <router-outlet #outlet="outlet"></router-outlet>
   </div>
 </div>

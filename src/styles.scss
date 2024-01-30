@@ -1,3 +1,4 @@
+@use "./style-util/main.scss";
 @use "./global-style/reset.scss";
 @use "./global-style/helper.scss";
 @use "./global-style/keyframes.scss";
@@ -10,5 +11,7 @@ body {
   animation: fadeIn 0.75s forwards;
 }
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}

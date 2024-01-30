@@ -1,0 +1,6 @@
+@use "../style-util/main.scss" as *;
+
+.error-info-backdrop {
+  backdrop-filter: blur(3px);
+  background-color: $error-info-backdrop;
+}

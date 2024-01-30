@@ -6,38 +6,31 @@ import {
   inject,
 } from '@angular/core';
 import { WorkerService } from './service/worker/worker.service';
-import { NavigationEnd, NavigationStart, Router } from '@angular/router';
-import { filter, tap } from 'rxjs';
-import { ApiService } from './service/api/api.service';
+import { style, animate, trigger, transition } from '@angular/animations';
+import { RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
+  animations: [
+    trigger('routeAnimations', [
+      transition('* => *', [
+        style({ opacity: 0 }),
+        animate('0.5s', style({ opacity: 1 })),
+      ]),
+    ]),
+  ],
 })
 export class AppComponent implements OnInit {
   @ViewChild('app') appEleRef!: ElementRef<HTMLElement>;
   private workerService = inject(WorkerService);
-  private router = inject(Router);
 
   ngOnInit(): void {
-    this.setRouterChangeTransition();
     this.workerService.init().subscribe();
   }
 
-  setRouterChangeTransition() {
-    this.router.events
-      .pipe(
-        tap((ev) => {
-          const appEle = this.appEleRef.nativeElement;
-          if (ev instanceof NavigationStart) {
-            appEle.style.height = appEle.getBoundingClientRect().height + 'px';
-          } else if (ev instanceof NavigationEnd) {
-            appEle.style.height = '';
-            appEle.style.height = appEle.getBoundingClientRect().height + 'px';
-          }
-        })
-      )
-      .subscribe();
+  getRouterOutletState(outlet: RouterOutlet) {
+    return outlet.isActivated ? outlet.activatedRoute : '';
   }
 }

@@ -24,10 +24,16 @@ self.addEventListener("message", (event) => {
           sendDataToClient("RESPONSE_API_DATA", responseData)
         )
         .catch((error) => {
-          console.error(error);
+          let errorMessage = "";
+          if (error instanceof Error) {
+            const err: Error = error;
+            errorMessage = err.message;
+          } else {
+            errorMessage = `Unknown Error: ${error}`;
+          }
           sendDataToClient(
-            "RESPONSE_API_DATA",
-            new Error("service worker get api data failed")
+            "GET_API_DATA_ERR",
+            new Error(`Service worker get api data failed => ${errorMessage}`)
           );
         });
       break;

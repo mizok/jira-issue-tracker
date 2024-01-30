@@ -2,6 +2,7 @@ import { Injectable, inject } from '@angular/core';
 import { WorkerService } from '../worker/worker.service';
 import { DataStoreService } from '../data-store/data-store.service';
 import { switchMap, take, throwError } from 'rxjs';
+import { ErrorHandlerService } from '../error-handler/error-handler.service';
 
 @Injectable({
   providedIn: 'root',
@@ -9,6 +10,7 @@ import { switchMap, take, throwError } from 'rxjs';
 export class ApiService {
   private workerService = inject(WorkerService);
   private dataStorageservice = inject(DataStoreService);
+  private erorHandlerService = inject(ErrorHandlerService);
   private GET_ISSUES = '/rest/api/3/search';
   private GET_CURRENT_USER = '/rest/api/3/myself';
 
@@ -17,9 +19,12 @@ export class ApiService {
       take(1),
       switchMap((config) => {
         if (!config) {
-          return throwError(() => new Error(''));
+          return this.erorHandlerService.info('No existing config.');
         }
         const baseUrl = config.jiraUrl;
+        if (!baseUrl) {
+          return this.erorHandlerService.info('No valid jiraUrl in config.');
+        }
         const apiUrl = `${baseUrl}${url}`;
         return this.workerService.getApiData(apiUrl);
       })

@@ -1,5 +1,5 @@
 import { ErrorHandler, Injectable, inject } from '@angular/core';
-import { Observable, Subject } from 'rxjs';
+import { Observable, Subject, catchError } from 'rxjs';
 import {
   SERVICE_WORKER,
   WorkerMessageResponseType,
@@ -34,22 +34,30 @@ export class WorkerService {
             this.postMessage(WorkerPostMessageType.INIT);
           }
         })
-        .catch((error) => {
-          console.error('Error during service worker registration:', error);
-          this.initSubject.error(error);
+        .catch((error: any) => {
+          let errorMessage = '';
+          if (error instanceof Error) {
+            const err: Error = error;
+            errorMessage = err.message;
+          } else {
+            errorMessage = `Unknown Error: ${error}`;
+          }
+          this.initSubject.error(errorMessage);
         });
     } else {
-      const errormsg = 'Service worker not supported.';
-      console.warn(errormsg);
-      this.initSubject.error(errormsg);
+      this.initSubject.error('Service worker not supported.');
     }
 
-    return this.initSubject.asObservable();
+    return this.initSubject.pipe(
+      catchError((error) => this.errorHandlerService.info(error))
+    );
   }
 
   getApiData(apiUrl: string) {
     this.postMessage(WorkerPostMessageType.GET_API_DATA, { url: apiUrl });
-    return this.getApiSubject.asObservable();
+    return this.getApiSubject.pipe(
+      catchError((error) => this.errorHandlerService.info(error))
+    );
   }
 
   private postMessage(type: WorkerPostMessageType, data?: any) {
@@ -76,6 +84,9 @@ export class WorkerService {
         break;
       case WorkerMessageResponseType.RESPONSE_API_DATA:
         this.getApiSubject.next(data);
+        break;
+      case WorkerMessageResponseType.GET_API_DATA_ERR:
+        this.getApiSubject.error(data);
         break;
     }
   }

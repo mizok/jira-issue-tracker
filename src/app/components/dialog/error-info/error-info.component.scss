@@ -1,0 +1,46 @@
+@use "main" as *;
+
+.error-info {
+  width: 320px;
+  padding: 12px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: start;
+  background: $error-info-bg;
+  border-radius: 8px;
+  box-shadow: 0px 0px 5px -3px #111;
+  opacity: 0;
+
+  // Element
+  &__icon {
+    width: 20px;
+    height: 20px;
+    transform: translateY(-2px);
+    margin-right: 8px;
+    align-self: flex-start;
+
+    path {
+      fill: #fff;
+    }
+  }
+
+  &__title {
+    font-weight: 500;
+    font-size: 14px;
+    color: $error-info-text;
+    padding-right: 10px;
+  }
+
+  &__close {
+    align-self: flex-start;
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    margin-left: auto;
+
+    path {
+      fill: #fff;
+    }
+  }
+}

@@ -1,0 +1,20 @@
+.main {
+  &__content {
+    padding: 20px;
+  }
+  &__skeleton {
+    @keyframes shimmer {
+      to {
+        background-position: -100% 0;
+      }
+    }
+    height: 10px;
+    background-image: linear-gradient(90deg, #eee 0px, #fff 40px, #eee 80px);
+    background-size: 300%;
+    background-position: 100% 0;
+    animation: shimmer 2s infinite;
+  }
+  &__skeleton + &__skeleton {
+    margin-top: 10px;
+  }
+}

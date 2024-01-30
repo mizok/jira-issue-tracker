@@ -1,15 +1,8 @@
-export const initialState: AppState = {
-  userConfig: {
-    jiraUrl: '',
-  },
-  userState: {
-    name: '',
-  },
-};
+export const initialState: AppState = {};
 
 export interface AppState {
-  userConfig: UserConfig;
-  userState: UserState;
+  userConfig?: UserConfig;
+  userState?: UserState;
 }
 
 export interface UserConfig {
@@ -18,4 +11,5 @@ export interface UserConfig {
 
 export interface UserState {
   name: string;
+  avatarImgUrl?: string;
 }

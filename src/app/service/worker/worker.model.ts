@@ -1,6 +1,7 @@
 export enum WorkerMessageResponseType {
   INITED = 'INITED',
   RESPONSE_API_DATA = 'RESPONSE_API_DATA',
+  GET_API_DATA_ERR = 'GET_API_DATA_ERR',
 }
 
 export enum WorkerPostMessageType {
