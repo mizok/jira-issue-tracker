@@ -1,6 +1,5 @@
 import { NgModule, isDevMode } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
@@ -10,8 +9,25 @@ import { StoreModule } from '@ngrx/store';
 import { reducers, metaReducers } from './store/app.reducer';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ErrorInfoComponent } from './components/dialog/error-info/error-info.component';
-import { DialogModule } from '@angular/cdk/dialog';
 import { ViewContainerRefDirective } from './directive/view-container-ref/view-container-ref.directive';
+import { OverlayContainer } from '@angular/cdk/overlay';
+import { DialogModule } from '@angular/cdk/dialog';
+
+export class AppOverlayContainer extends OverlayContainer {
+  override _createContainer(): void {
+    const container: HTMLDivElement = document.createElement('div');
+    container.classList.add('app-overlay-container');
+
+    const element: Element | null = document.querySelector(
+      '#app-overlay-container-wrapper'
+    );
+    if (element !== null) {
+      element.setAttribute('style', 'transform:translateZ(0);');
+      element.appendChild(container);
+      this._containerElement = container;
+    }
+  }
+}
 
 @NgModule({
   declarations: [AppComponent, ErrorInfoComponent, ViewContainerRefDirective],
@@ -29,7 +45,7 @@ import { ViewContainerRefDirective } from './directive/view-container-ref/view-c
     StoreModule.forRoot(reducers, { metaReducers }),
     BrowserAnimationsModule,
   ],
-  providers: [],
+  providers: [{ provide: OverlayContainer, useClass: AppOverlayContainer }],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

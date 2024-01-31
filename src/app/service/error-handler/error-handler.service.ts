@@ -18,12 +18,11 @@ export class ErrorHandlerService {
     const positionStrategy = this.overlay
       .position()
       .global()
-      .top('10px')
       .centerHorizontally();
 
-    const dialogRef = this.dialog.open<ErrorInfoDataType>(ErrorInfoComponent, {
+    this.dialog.open<ErrorInfoDataType>(ErrorInfoComponent, {
       panelClass: 'error-info-panel',
-      hasBackdrop: false,
+      backdropClass: 'error-info-backdrop',
       disableClose: true,
       positionStrategy: positionStrategy,
       data: {

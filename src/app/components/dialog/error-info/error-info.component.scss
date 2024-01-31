@@ -1,25 +1,27 @@
 @use "main" as *;
 
 .error-info {
-  width: 320px;
-  padding: 12px;
+  padding: 8px 12px;
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: start;
   background: $error-info-bg;
-  border-radius: 8px;
-  box-shadow: 0px 0px 5px -3px #111;
+  border-left: 5px solid $error-info-tag;
+  box-shadow: 0 0 10px -1px #666;
   opacity: 0;
 
   // Element
   &__icon {
     width: 20px;
     height: 20px;
+    flex: none;
     transform: translateY(-2px);
     margin-right: 8px;
     align-self: flex-start;
-
+    svg {
+      width: 100%;
+    }
     path {
       fill: #fff;
     }

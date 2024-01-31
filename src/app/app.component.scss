@@ -15,11 +15,22 @@
     flex: none;
   }
 
-  &__header + &__body {
+  &__header + &__body,
+  &__header ~ &__offline {
     border-top: $border;
   }
+  &__body,
+  &__offline {
+    overflow: hidden;
+    animation: fadeIn 0.5s forwards;
+  }
+
   &__body {
     flex: 1;
+  }
+
+  &__offline {
+    flex: none;
   }
 }
 
@@ -82,5 +93,28 @@
   }
   img {
     width: 60%;
+  }
+}
+
+.app-offline {
+  &__inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 400px;
+    padding: 30px;
+    background-color: lighten($primary, 60%);
+  }
+  &__title {
+    text-align: center;
+    font-size: 15px;
+    color: $lightblack;
+    font-weight: 300;
+  }
+  &__img {
+    width: 200px;
+    opacity: 0.75;
+    mix-blend-mode: darken;
   }
 }

@@ -7,7 +7,7 @@
       <div class="app-header__title">JiraRader</div>
     </div>
     <div class="app-header__latter">
-      <button class="app-header__button avatar">
+      <button class="app-header__button avatar" *ngIf="!isOffline">
         <img src="" alt="" />
       </button>
       <button class="app-header__button fancy-button" *ngIf="false">
@@ -40,12 +40,26 @@
         </span>
         Open App
       </button>
-      <button class="app-header__button more-button">
+      <button class="app-header__button more-button" *ngIf="!isOffline">
         <img src="assets/images/more.svg" alt="more" />
       </button>
     </div>
   </div>
-  <div class="app__body" [@routeAnimations]="getRouterOutletState(outlet)">
+  <div
+    class="app__body"
+    [hidden]="isOffline"
+    [@routeAnimations]="getRouterOutletState(outlet)"
+    id="app-overlay-container-wrapper"
+  >
     <router-outlet #outlet="outlet"></router-outlet>
+  </div>
+  <div class="app__offline app-offline" [hidden]="!isOffline">
+    <div class="app-offline__inner">
+      <img class="app-offline__img" src="assets/images/offline.png" alt="" />
+      <h2 class="app-offline__title">
+        You seem to be offline now :(<br />Please check your Internet
+        connection.
+      </h2>
+    </div>
   </div>
 </div>
