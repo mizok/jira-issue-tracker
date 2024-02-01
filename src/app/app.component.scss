@@ -108,9 +108,10 @@
   }
   &__title {
     text-align: center;
-    font-size: 15px;
+    font-size: 14px;
     color: $lightblack;
     font-weight: 300;
+    opacity: 0.6;
   }
   &__img {
     width: 200px;
