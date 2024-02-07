@@ -29,7 +29,6 @@ export class WorkerService {
               MessageEvent<any>
             >(navigator.serviceWorker, 'message', (event) => {
               // console.log('got message from service worker!!!!!', event);
-              console.log(event, '!!!!!');
               this.workerEventHandler(event);
             });
             this.postMessage(WorkerPostMessageType.INIT);

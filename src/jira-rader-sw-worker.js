@@ -16,7 +16,6 @@ function requestApiData(apiUrl) {
       } else {
         errorMessage = `Unknown Error: ${error}`;
       }
-      console.log("error!!!!!");
       return sendDataToClient(
         "GET_API_DATA_ERR",
         new Error(`Service worker get api data failed => ${errorMessage}`)
@@ -33,7 +32,6 @@ self.addEventListener("message", (event) => {
       break;
     case "GET_API_DATA":
       requestApiData(data.url).then((responseData) => {
-        console.log("response!!!!!");
         return sendDataToClient("RESPONSE_API_DATA", responseData);
       });
       break;

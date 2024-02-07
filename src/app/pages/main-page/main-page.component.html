@@ -1,9 +1,26 @@
-<div class="main">
-  <div class="main__side"></div>
-  <div class="main__content">
-    <div
-      class="main__skeleton"
-      *ngFor="let bone of [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]"
-    ></div>
+<div class="main-page">
+  <div class="main-page__side side-menu">
+    <ul
+      class="side-menu__ul"
+      *ngIf="routeConfigChildren && routeConfigChildren.length > 0"
+    >
+      <li class="side-menu__li" *ngFor="let route of routeConfigChildren">
+        <div
+          class="side-menu__btn"
+          *ngIf="
+            route.path
+              | transformer
+                : MainPageRoutingType.getInstanceOfRelativePath as routeConfig
+          "
+          (click)="navigateTo(routeConfig.relativePath)"
+        >
+          {{ routeConfig.imageUrl }}
+        </div>
+      </li>
+    </ul>
+  </div>
+  <div class="main-page__content">
+    <div class="main-page__skeleton"></div>
+    <router-outlet></router-outlet>
   </div>
 </div>

@@ -1,20 +1,20 @@
-.main {
+.main-page {
+  display: flex;
+  &__side {
+    flex: none;
+  }
   &__content {
-    padding: 20px;
+    flex: 1;
   }
-  &__skeleton {
-    @keyframes shimmer {
-      to {
-        background-position: -100% 0;
-      }
-    }
-    height: 10px;
-    background-image: linear-gradient(90deg, #eee 0px, #fff 40px, #eee 80px);
-    background-size: 300%;
-    background-position: 100% 0;
-    animation: shimmer 2s infinite;
+}
+
+.side-menu {
+  &__ul {
+    padding: 5px;
   }
-  &__skeleton + &__skeleton {
+  &__li + &__li {
     margin-top: 10px;
+  }
+  &__btn {
   }
 }

@@ -39,7 +39,7 @@ export class ApiService {
 
   getIssues(maxResults = 20) {
     const jqlQuery = 'project=CPS AND assignee = currentUser()'; // 替換成你的專案代碼
-    const url = `${this.GET_ISSUES}?jql==${encodeURIComponent(
+    const url = `${this.GET_ISSUES}?jql=${encodeURIComponent(
       jqlQuery
     )}&maxResults=${maxResults}`;
     return this.getApiData(url);
