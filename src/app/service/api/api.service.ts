@@ -1,7 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { WorkerService } from '../worker/worker.service';
 import { DataStoreService } from '../data-store/data-store.service';
-import { switchMap, take, throwError } from 'rxjs';
+import { switchMap, take } from 'rxjs';
 import { ErrorHandlerService } from '../error-handler/error-handler.service';
 
 @Injectable({

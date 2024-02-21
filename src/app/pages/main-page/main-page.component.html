@@ -14,13 +14,19 @@
           "
           (click)="navigateTo(routeConfig.relativePath)"
         >
-          {{ routeConfig.imageUrl }}
+          <app-html-renderer
+            [renderHTML]="routeConfig.image"
+          ></app-html-renderer>
         </div>
       </li>
     </ul>
   </div>
   <div class="main-page__content">
-    <div class="main-page__skeleton"></div>
-    <router-outlet></router-outlet>
+    <div
+      class="main-page__router-animation-wrapper"
+      [@slideInOut]="prepareRoute(outlet)"
+    >
+      <router-outlet #outlet="outlet"></router-outlet>
+    </div>
   </div>
 </div>

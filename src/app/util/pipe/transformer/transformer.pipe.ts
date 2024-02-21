@@ -9,8 +9,6 @@ export class TransformerPipe<T> implements PipeTransform {
       return target;
     }
 
-    console.log(transformFunc(target), '!!!!!');
-
     return transformFunc(target);
   }
 }
