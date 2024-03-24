@@ -11,7 +11,7 @@ import {
 import { WorkerService } from './service/worker/worker.service';
 import { style, animate, trigger, transition } from '@angular/animations';
 import { RouterOutlet } from '@angular/router';
-import { ViewContainerRefDirective } from './directive/view-container-ref/view-container-ref.directive';
+import { ViewContainerRefDirective } from './util/directive/view-container-ref/view-container-ref.directive';
 import { DOCUMENT } from '@angular/common';
 import { fromEvent, map, merge, startWith, filter, switchMap } from 'rxjs';
 import { ErrorHandlerService } from './service/error-handler/error-handler.service';

@@ -6,17 +6,30 @@
     >
       <li class="side-menu__li" *ngFor="let route of routeConfigChildren">
         <div
-          class="side-menu__btn"
+          class="side-menu__btn side-menu-btn"
           *ngIf="
             route.path
               | transformer
                 : MainPageRoutingType.getInstanceOfRelativePath as routeConfig
           "
+          [class.side-menu-btn--active]="activatedPath === route.path"
           (click)="navigateTo(routeConfig.relativePath)"
         >
-          <app-html-renderer
-            [renderHTML]="routeConfig.image"
-          ></app-html-renderer>
+          <div
+            class="side-menu-btn__img"
+            [style.-webkit-mask-image]="
+              routeConfig.imgSource
+                | svgSource
+                  : {
+                      stroke: 'black',
+                      fill: 'none',
+                      'stroke-width': '1.5',
+                      'stroke-linecap': 'round',
+                      'stroke-linejoin': 'round'
+                    }
+                | imageUrl
+            "
+          ></div>
         </div>
       </li>
     </ul>

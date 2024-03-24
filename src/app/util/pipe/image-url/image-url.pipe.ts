@@ -5,7 +5,6 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class ImageUrlPipe implements PipeTransform {
   transform(path: string): unknown {
-    console.log(`url('${path}')`);
     return `url('${path}')`;
   }
 }

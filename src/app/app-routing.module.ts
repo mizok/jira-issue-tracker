@@ -1,6 +1,5 @@
 import { NgModule, inject } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { map, take, tap } from 'rxjs';
 import { AuthService } from './service/auth/auth.service';
 
 const routes: Routes = [

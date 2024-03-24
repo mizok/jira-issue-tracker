@@ -7,8 +7,7 @@ import { IssueHistoryPageComponent } from './issue-history-page/issue-history-pa
 import { CalendarPageComponent } from './calendar-page/calendar-page.component';
 import { TransformerModule } from 'src/app/util/pipe/transformer/transformer.module';
 import { ImageUrlModule } from 'src/app/util/pipe/image-url/image-url.module';
-import { SafeContentModule } from 'src/app/util/pipe/safe-content/safe-content.module';
-import { HtmlRendererModule } from 'src/app/components/html-renderer/html-renderer.module';
+import { SvgSourceModule } from 'src/app/util/pipe/svg-source/svg-source.module';
 
 @NgModule({
   declarations: [
@@ -22,7 +21,7 @@ import { HtmlRendererModule } from 'src/app/components/html-renderer/html-render
     MainPageRoutingModule,
     TransformerModule,
     ImageUrlModule,
-    HtmlRendererModule,
+    SvgSourceModule,
   ],
 })
 export class MainPageModule {}

@@ -12,21 +12,26 @@ import { slideInOutRouterAnimation } from 'src/app/util/animation/router.animati
 })
 export class MainPageComponent implements AfterViewInit {
   private apiService = inject(ApiService);
-  private route = inject(ActivatedRoute);
+  private activatedRoute = inject(ActivatedRoute);
   private router = inject(Router);
   public get routeConfigChildren() {
-    return this.route.routeConfig?.children?.filter(
-      (route) => !!route.component
+    return this.activatedRoute.routeConfig?.children?.filter(
+      (activatedRoute) => !!activatedRoute.component
     );
   }
+  public get activatedPath() {
+    const childRoute = this.activatedRoute.firstChild;
+    return childRoute?.snapshot.url.join('/');
+  }
+
   readonly MainPageRoutingType = MainPageRoutingType;
 
   ngAfterViewInit(): void {
-    this.apiService.getIssues().subscribe((data) => console.log(data));
+    return;
   }
 
   navigateTo(relativePath: string) {
-    this.router.navigate([relativePath], { relativeTo: this.route });
+    this.router.navigate([relativePath], { relativeTo: this.activatedRoute });
   }
 
   prepareRoute(outlet: RouterOutlet) {

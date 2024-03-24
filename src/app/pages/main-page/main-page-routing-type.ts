@@ -1,4 +1,9 @@
-import { IconHome2 } from 'angular-tabler-icons/icons';
+import {
+  IconCalendarMonth,
+  IconHistory,
+  IconListCheck,
+  IconNotes,
+} from 'angular-tabler-icons/icons';
 
 export enum MainPageRoutingTypeEnum {
   ISSUE,
@@ -18,28 +23,28 @@ export class MainPageRoutingType {
     MainPageRoutingTypeEnum.ISSUE,
     'issue',
     'main/issue',
-    IconHome2,
+    IconListCheck,
     'Issue'
   );
   static readonly CALENDAR = new MainPageRoutingType(
     MainPageRoutingTypeEnum.CALENDAR,
     'calendar',
     'main/calendar',
-    IconHome2,
+    IconCalendarMonth,
     'Calendar'
   );
   static readonly ISSUE_HISTORY = new MainPageRoutingType(
     MainPageRoutingTypeEnum.ISSUE,
     'issue-history',
     'main/issue-history',
-    IconHome2,
+    IconHistory,
     'Issue History'
   );
   static readonly MEMO = new MainPageRoutingType(
     MainPageRoutingTypeEnum.MEMO,
     'memo',
     'main/memo',
-    IconHome2,
+    IconNotes,
     'Memo'
   );
 
@@ -55,8 +60,8 @@ export class MainPageRoutingType {
     return this._absolutePath;
   }
 
-  get image() {
-    return this._image;
+  get imgSource() {
+    return this._imgSource;
   }
 
   get name() {
@@ -83,7 +88,7 @@ export class MainPageRoutingType {
     private _id: number,
     private _relativePath: string,
     private _absolutePath: string,
-    private _image: string,
+    private _imgSource: string,
     private _name: string
   ) {
     MainPageRoutingType.instances.push(this);

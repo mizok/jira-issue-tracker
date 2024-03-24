@@ -9,9 +9,10 @@ import { StoreModule } from '@ngrx/store';
 import { reducers, metaReducers } from './store/app.reducer';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ErrorInfoComponent } from './components/dialog/error-info/error-info.component';
-import { ViewContainerRefDirective } from './directive/view-container-ref/view-container-ref.directive';
 import { OverlayContainer } from '@angular/cdk/overlay';
 import { DialogModule } from '@angular/cdk/dialog';
+
+const DIALOGS = [ErrorInfoComponent];
 
 export class AppOverlayContainer extends OverlayContainer {
   override _createContainer(): void {
@@ -30,7 +31,7 @@ export class AppOverlayContainer extends OverlayContainer {
 }
 
 @NgModule({
-  declarations: [AppComponent, ErrorInfoComponent, ViewContainerRefDirective],
+  declarations: [AppComponent, ...DIALOGS],
   imports: [
     BrowserModule,
     AppRoutingModule,

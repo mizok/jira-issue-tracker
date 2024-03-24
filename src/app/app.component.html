@@ -47,13 +47,16 @@
   </div>
   <div
     class="app__body"
-    [hidden]="isOffline"
+    [style.display]="isOffline ? 'none' : ''"
     [@routeAnimations]="getRouterOutletState(outlet)"
     id="app-overlay-container-wrapper"
   >
     <router-outlet #outlet="outlet"></router-outlet>
   </div>
-  <div class="app__offline app-offline" [hidden]="!isOffline">
+  <div
+    class="app__offline app-offline"
+    [style.display]="isOffline ? '' : 'none'"
+  >
     <div class="app-offline__inner">
       <img class="app-offline__img" src="assets/images/offline.png" alt="" />
       <h2 class="app-offline__title">

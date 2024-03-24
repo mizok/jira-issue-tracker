@@ -7,6 +7,7 @@
 .app {
   $border: 1px solid $app-border;
   width: 500px;
+  height: 500px;
   background-color: $white;
   display: flex;
   flex-direction: column;
@@ -27,6 +28,8 @@
 
   &__body {
     flex: 1;
+    display: grid;
+    grid-template-rows: 1fr;
   }
 
   &__offline {
