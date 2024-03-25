@@ -1,7 +1,11 @@
 import { Injectable, inject } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { setUserConfig, setUserState } from '../../store/app.actions';
-import { UserState, UserConfig } from '../../store/app.state';
+import {
+  setUserConfig,
+  setUserState,
+  storeApiCache,
+} from '../../store/app.actions';
+import { UserState, UserConfig, ApiCache } from '../../store/app.state';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -24,5 +28,17 @@ export class DataStoreService {
 
   getUserState(): Observable<UserState> {
     return this.store.select<UserState>((state) => state.appState.userState);
+  }
+
+  cacheApiData(state: ApiCache) {
+    this.store.dispatch(storeApiCache(state));
+  }
+
+  getApiDataCache(url: string) {
+    return this.store.select<ApiCache>((state) =>
+      state.appState?.apiCache
+        ? state.appState.apiCache[url] ?? undefined
+        : undefined
+    );
   }
 }

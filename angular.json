@@ -78,10 +78,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "jira-rader:build:production"
+              "buildTarget": "jira-rader:build:production"
             },
             "development": {
-              "browserTarget": "jira-rader:build:development"
+              "buildTarget": "jira-rader:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -89,7 +89,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "jira-rader:build"
+            "buildTarget": "jira-rader:build"
           }
         },
         "test": {

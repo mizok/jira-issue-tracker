@@ -1,5 +1,5 @@
 import { createAction, props } from '@ngrx/store';
-import { UserConfig, UserState } from './app.state';
+import { ApiCache, UserConfig, UserState } from './app.state';
 
 export const setUserConfig = createAction(
   '[User Config] Set User Config',
@@ -9,4 +9,9 @@ export const setUserConfig = createAction(
 export const setUserState = createAction(
   '[User State] Set User State',
   props<UserState>()
+);
+
+export const storeApiCache = createAction(
+  '[API Cache] Store API Cache',
+  props<ApiCache>()
 );

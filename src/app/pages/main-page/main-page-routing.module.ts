@@ -1,10 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { MainPageComponent } from './main-page.component';
-import { IssuePageComponent } from './issue-page/issue-page.component';
-import { CalendarPageComponent } from './calendar-page/calendar-page.component';
-import { IssueHistoryPageComponent } from './issue-history-page/issue-history-page.component';
-import { MemoPageComponent } from './memo-page/memo-page.component';
 import { MainPageRoutingType } from './main-page-routing-type';
 
 const routes: Routes = [
@@ -19,19 +15,25 @@ const routes: Routes = [
       },
       {
         path: MainPageRoutingType.ISSUE.relativePath,
-        component: IssuePageComponent,
+        loadChildren: () =>
+          import('./issue-page/').then((res) => res.IssuePageModule),
       },
       {
         path: MainPageRoutingType.CALENDAR.relativePath,
-        component: CalendarPageComponent,
+        loadChildren: () =>
+          import('./calendar-page/').then((res) => res.CalendarPageModule),
       },
       {
         path: MainPageRoutingType.ISSUE_HISTORY.relativePath,
-        component: IssueHistoryPageComponent,
+        loadChildren: () =>
+          import('./issue-history-page/').then(
+            (res) => res.IssueHistoryPageModule
+          ),
       },
       {
         path: MainPageRoutingType.MEMO.relativePath,
-        component: MemoPageComponent,
+        loadChildren: () =>
+          import('./memo-page/').then((res) => res.MemoPageModule),
       },
     ],
   },

@@ -3,7 +3,12 @@
   <div class="issue-page__body">
     <div class="issue-page__list issue-page-list">
       <ul class="issue-page-list__ul">
-        <li class="issue-page-list__li"></li>
+        <li
+          class="issue-page-list__li"
+          *ngFor="let issue of issueListSignal()?.issues"
+        >
+          {{ issue?.fields?.summary }}
+        </li>
       </ul>
     </div>
   </div>

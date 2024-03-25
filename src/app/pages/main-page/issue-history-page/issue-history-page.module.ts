@@ -1,19 +1,19 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MainPageRoutingModule } from './main-page-routing.module';
 import { TransformerModule } from 'src/app/util/pipe/transformer/transformer.module';
 import { ImageUrlModule } from 'src/app/util/pipe/image-url/image-url.module';
 import { SvgSourceModule } from 'src/app/util/pipe/svg-source/svg-source.module';
-import { MainPageComponent } from './main-page.component';
+import { IssueHistoryPageComponent } from './issue-history-page.component';
+import { IssueHistoryPageRoutingModule } from './issue-history-page-routing.module';
 
 @NgModule({
-  declarations: [MainPageComponent],
+  declarations: [IssueHistoryPageComponent],
   imports: [
     CommonModule,
-    MainPageRoutingModule,
     TransformerModule,
     ImageUrlModule,
     SvgSourceModule,
+    IssueHistoryPageRoutingModule,
   ],
 })
-export class MainPageModule {}
+export class IssueHistoryPageModule {}

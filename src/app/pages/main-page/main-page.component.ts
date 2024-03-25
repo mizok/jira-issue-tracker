@@ -16,7 +16,7 @@ export class MainPageComponent implements AfterViewInit {
   private router = inject(Router);
   public get routeConfigChildren() {
     return this.activatedRoute.routeConfig?.children?.filter(
-      (activatedRoute) => !!activatedRoute.component
+      (activatedRoute) => !!activatedRoute.loadChildren
     );
   }
   public get activatedPath() {
